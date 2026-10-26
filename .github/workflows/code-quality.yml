@@ -14,6 +14,8 @@ jobs:
   analyze_sonar:
     name: Run unit tests and Sonar analysis
     runs-on: ubuntu-latest
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     steps:
       - uses: actions/checkout@v7.0.1
         with:
@@ -35,14 +37,17 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: Analyze code quality
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Run unit tests
         # note that we deliberately turn off the OWASP dependency checker here, it will run in a separate job,
         # such that its results can be viewed independently of what Sonar has to say
         run: |
-          mvn -B verify sonar:sonar -Dsonar.projectKey=siemens_cmp-ra-component -Ddependency-check.skip=true -Dgpg.skip
+          mvn -B verify -Ddependency-check.skip=true -Dgpg.skip
+      - name: Analyze code quality with SonarCloud
+        if: ${{ env.SONAR_TOKEN != '' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mvn -B sonar:sonar -Dsonar.projectKey=siemens_cmp-ra-component -Ddependency-check.skip=true -Dgpg.skip
 
   analyze_dependencies_owasp:
     name: Check dependencies with OWASP
