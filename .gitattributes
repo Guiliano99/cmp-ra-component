@@ -1,0 +1,8 @@
+# Jazzer fuzzing seed inputs and generated corpus are raw bytes.
+# Mark them as binary so that git does not misinterpret the bytes as text,
+# convert line terminators on checkout and thus change the fuzzing input.
+# See https://github.com/CodeIntelligenceTesting/jazzer#directories-and-files
+src/test/resources/**/fuzz/** binary
+.cifuzz-corpus/** binary
+# The fuzzing dictionary is text and should stay diffable.
+src/test/resources/**/fuzz/*.dict text diff merge eol=lf
