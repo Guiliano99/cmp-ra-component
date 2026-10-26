@@ -7,6 +7,8 @@
    Jackson 2.22.4, Spotless 3.10.4, and others)
  - chore: Scan dependencies via Dependabot monthly updates; add GitHub Actions
    ecosystem to Dependabot configuration
+ - fix: Prevent OWASP dependency-check CI failure by only passing the NVD API
+   key when the NVD_TOKEN secret is available
 
 ## 4.3.0 (Dec 10 2025)
 
