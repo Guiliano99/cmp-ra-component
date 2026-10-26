@@ -10,12 +10,12 @@ jobs:
   sign:
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7.0.1
       - name: Process retrieved files
         # here we build everything, then sign and upload to Maven Central, using the nexus-staging plugin
         run: mvn package gpg:sign nexus-staging:deploy nexus-staging:deploy-staged -DskipTests
       - name: Upload resulting artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: jar-sig-hash
           path: target/CmpRaComponent*.*

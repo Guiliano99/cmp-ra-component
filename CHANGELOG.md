@@ -1,5 +1,13 @@
 # Change Log (CMP RA Component)
 
+## Unreleased
+ - chore: Update GitHub Actions versions (actions/checkout v7.0.1, setup-java v6.1.0,
+   cache v6.1.0, upload-artifact v7.0.2, setup-python v7.1.0)
+ - chore: Bump Maven dependencies/plugins to latest stable (Bouncy Castle 1.86,
+   Jackson 2.22.4, Spotless 3.10.4, and others)
+ - chore: Scan dependencies via Dependabot monthly updates; add GitHub Actions
+   ecosystem to Dependabot configuration
+
 ## 4.3.0 (Dec 10 2025)
 
  - feat: Implement PQ support
