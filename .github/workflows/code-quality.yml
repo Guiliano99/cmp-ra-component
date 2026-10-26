@@ -67,4 +67,10 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           OSS_INDEX_PASSWORD: ${{ secrets.OSS_INDEX_PASSWORD }}
           OSS_INDEX_USERNAME: ${{ secrets.OSS_INDEX_USERNAME }}
-        run: mvn dependency-check:check -DnvdApiKey=${{ secrets.NVD_TOKEN }}
+          NVD_TOKEN: ${{ secrets.NVD_TOKEN }}
+        run: |
+          if [ -n "$NVD_TOKEN" ]; then
+            mvn dependency-check:check -DnvdApiKey="$NVD_TOKEN"
+          else
+            mvn dependency-check:check
+          fi
